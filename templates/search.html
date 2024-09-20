@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="{{ url_for('static', filename='search_theme.css') }}">
+<html>
+    <head>
+        <title>Search Zeugs</title>
+        
+    </head> 
+    <body>
+    <div class="wrapper">
+    <div class="header">
+        <a href="/">Home</a>
+        <a href="/input">Inserts</a>
+        <a href="/search">Search</a>
+    </div>
+    <div class="main_box">
+    <form action="" method="post" novalidate>
+        {{ search_form.hidden_tag() }}
+        <p>
+            {{ search_form.title.label }}
+            {{ search_form.title(size=50) }}
+        </p>
+        <p>
+            {{ search_form.author.label }}{{ search_form.author(size=50) }}
+        </p>
+        <p>
+            {{ search_form.more_less.label }}{{ search_form.more_less(size=6) }}
+        </p>
+        <p>
+            {{ search_form.words.label }}
+            {{ search_form.words(size=6) }}
+        </p>
+        <p>
+            {{ search_form.summary.label }}
+            {{ search_form.summary(size=250) }}
+        </p>
+    </div>
+    <div class="character_box">
+        <p>
+            {{ search_form.characters.label }}
+            {{ search_form.characters }}
+        </p>
+    </div>
+    <div class="relation_box">
+        <p>
+            {{ search_form.relationships.label }}
+            {{ search_form.relationships }}
+        </p>
+    </div>
+    <div class="genre_box">
+        <p>
+            {{ search_form.genres.label }}
+            {{ search_form.genres }}
+        </p>
+    </div>
+    <div class="tag_box">
+        <p>
+            {{ search_form.tags.label }}
+            {{ search_form.tags }}
+        </p>
+    </div>
+    <div class="mixed_box">
+        <p>
+            {{ search_form.serial.label }}
+            {{ search_form.summary(size=50) }}
+        </p>
+        <p>
+            {{ search_form.serial_part.label }}
+            {{ search_form.serial_part(size=20) }}
+        </p>
+
+        <p>
+            {{ search_form.status.label }}
+            {{ search_form.status(size=3) }}
+        </p>
+        <p>{{ search_form.submit_search() }}</p>
+        
+
+    </form>
+    </div>
+    <!-- <div class= "right_box">
+        <h1>RIGHT</h1>
+        <table>
+            <tr>
+                {% for h in headers %}
+                <td>{{h}}</td>
+                {% endfor %}                
+
+            </tr>
+            {% for story in results[1:] %}
+            <tr>
+                {% for entry in story %}
+                <td>{{entry}}</td>
+                {% endfor %}
+            
+            <td>
+                <form action="{{ url_for('search') }}" method="post">
+                    {{ open_file_form.csrf_token }}
+                    <input type="hidden" name="part" value="{{ story['part'] }}">
+                    <input type="submit" value="Datei öffnen">
+                </form>
+            </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div> -->
+    <div class= "right_box">
+        <table>
+                {% for h in headers %}
+                <th>{{h}}</th>
+                {% endfor %} 
+
+                
+            {% for story in results[1:] %}
+            <tr>
+                {% for entry in story %}
+                <td>{{entry}}</td>
+                {% endfor %}    
+            <td>
+                <form action="{{ url_for('search') }}" method="post">
+                    {{ open_file_form.csrf_token() }}
+                    <input type="hidden" name="part" value="{{ story['part'] }}">
+                    {{ open_file_form.submit_open() }}
+                </form>
+            </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <!-- {% for result in results %}
+        <div>
+            {% for x in result %}
+            <p>{{x}}</p>
+            {% endfor %}
+            {{ result['title'] }} - {{ result['part'] }}
+            <form action="{{ url_for('search') }}" method="post">
+                {{ open_file_form.csrf_token() }}
+                <input type="hidden" name="part" value="{{ result['part'] }}">
+                {{ open_file_form.submit_open() }}
+            </form>
+        </div>
+        {% endfor %} -->
+    </div>
+    
+    
+    </body>
+    </div>

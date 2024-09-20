@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="{{ url_for('static', filename='search_theme.css') }}">
+<html>
+    <head>
+        <title>Search Zeugs alt</title>
+    </head> 
+    <body>
+    <div class="wrapper">
+    <div class="header">
+        <a href="/">Home</a>
+        <a href="/input">Inserts</a>
+        <a href="/search">Search</a>
+    </div>
+    <div class="left_box">
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.title.label }}
+            {{ form.title(size=50) }}
+        </p>
+        <p>
+            {{ form.author.label }}{{ form.author(size=50) }}
+        </p>
+        <p>
+            {{ form.more_less.label }}
+            {{ form.more_less(size=6) }}
+        </p>
+        <p>
+            {{ form.words.label }}
+            {{ form.words(size=6) }}
+        </p>
+        <p>
+            {{ form.summary.label }}
+            {{ form.summary(size=100) }}
+        </p>
+        <p>
+            {{ form.characters.label }}
+            {{ form.characters }}
+            {{ form.relationships.label }}
+            {{ form.relationships }}
+            {{ form.genres.label }}
+            {{ form.genres }}
+            {{ form.tags.label }}
+            {{ form.tags }}
+
+        <p>
+            {{ form.serial.label }}
+            {{ form.summary(size=100) }}
+        </p>
+    
+        <p>
+            {{ form.part.label }}
+            {{ form.part(size=20) }}
+        </p>
+
+        <p>
+            {{ form.status.label }}
+            {{ form.status(size=3) }}
+        </p>
+        <p>{{ form.submit() }}</p>
+        
+
+    </form>
+    </div>
+    <div class= "right_box">
+        <h1>RIGHT</h1>
+        <table>
+            <tr>
+                {% for h in headers %}
+                <td>{{h}}</td>
+                {% endfor %}                
+
+            </tr>
+            {% for story in results[1:] %}
+            <tr>
+                {% for entry in story %}
+                <td>{{entry}}</td>
+                {% endfor %}
+            <!-- <td><button class="button {{ story.part }}">{{ story.part }}</button></td> -->
+            <td>
+                <form action="{{ url_for('open_file') }}" method="post">
+                    {{ form.hidden_tag() }}
+                    {{ form.filepath(value=story.part) }}
+                    {{ form.submit2() }}
+                </form>
+            </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </div>
+    </body>
+    </div>

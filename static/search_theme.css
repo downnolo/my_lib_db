@@ -1,0 +1,119 @@
+.wrapper{
+    display: grid;
+    height : 850px;
+    font-family:Arial, Helvetica, sans-serif;
+    grid-template-rows: 5% 35% 15% 15% 30%;
+    grid-template-columns: 15% 15% 70%;
+    background-color:black;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+
+  .header {
+    background-color: rosybrown;
+    grid-column-start: 1;
+    grid-column-end:  4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+  }
+
+  input[type=text] {
+    background-color: #a96f6f;
+    color: white;
+  }
+
+  select  {
+    background-color: #a96f6f;
+    color: black;
+  }
+
+  textarea {
+    background-color: #a96f6f;
+  }
+
+  .main_box {
+    background-color: rosybrown;
+    grid-column-start: 1;
+    grid-column-end:  3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
+
+  .character_box {
+    background-color: rosybrown;
+    grid-column-start: 1;
+    grid-column-end:  2;
+    grid-row-start:  3;
+    grid-row-end: 4;
+  }
+
+
+  .relation_box {
+    background-color: rosybrown;
+    grid-column-start: 2;
+    grid-column-end:  3;
+    grid-row-start:  3;
+    grid-row-end: 4;
+  }
+
+  .genre_box {
+    background-color: rosybrown;
+    grid-column-start: 1;
+    grid-column-end:  2;
+    grid-row-start: 4;
+    grid-row-end: 5;
+  }
+
+
+  .tag_box {
+    background-color: rosybrown;
+    grid-column-start: 2;
+    grid-column-end:  3;
+    grid-row-start: 4;
+    grid-row-end: 5;
+  }
+
+  .mixed_box {
+    background-color: rosybrown;
+    grid-column-start: 1;
+    grid-column-end:  3;
+    grid-row-start: 5;
+    grid-row-end: 6;
+  }
+  
+  .right_box {
+    background-color: rosybrown;
+    grid-column-start: 3;
+    grid-column-end:  4;
+    grid-row-start: 2;
+    grid-row-end: 6;
+  }
+
+
+
+table {
+  overflow-x: auto;
+  font-family:Arial, Helvetica, sans-serif;
+  font-size: 12pt;
+  margin: 4px 2px;
+  width: 100%;
+}
+
+#r {
+  float: right;  
+}
+
+#l {
+  float: left;
+}
+
+th {
+  text-align: left;
+  font-weight: bold;
+}
+
+
+input[type=button], input[type=submit], input[type=reset] {
+  background-color: #5f4449;
+  border: none;
+}

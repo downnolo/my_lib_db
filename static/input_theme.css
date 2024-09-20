@@ -1,0 +1,23 @@
+.wrapper{
+    display: grid;
+    height: auto;
+    grid-template-rows: 10% 90%;
+    grid-template-columns: 100%;
+    background-color: red;
+  }
+
+  .header {
+    background-color: lightpink;
+    grid-column-start: 1;
+    grid-column-end:  2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+  }
+
+  .main_box {
+    background-color: lightcoral;
+    grid-column-start: 1;
+    grid-column-end:  2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
