@@ -83,7 +83,8 @@ def search():
    open_file_form = OpenFileForm()
    results = []
    headers = ['main_id', 'title', 'author', 'words', 'status', 'summary', 'characters', 'relationships', 'genres', 'tags', 'serial', 'part']
-
+   headers = headers[:5] + headers[-2:]
+   details = headers[5:10]
    if request.method == 'POST':
       if search_form.submit_search.data and search_form.is_submitted():
          query = create_query(search_form)
@@ -93,6 +94,9 @@ def search():
          conn.commit()
          results = dict_cur.fetchall()
          session['results'] = results
+         for r in results:
+            print(r)
+            session['details'] = r
 
       elif open_file_form.submit_open.data and open_file_form.validate_on_submit():
          base_path = "C:\\Users\\Yvonne\\Desktop"
@@ -104,11 +108,21 @@ def search():
          except Exception as e:
                print(f'Fehler beim Öffnen der Datei: {str(e)}')
 
-   print(session)
+   #print(session)
 
    results = session.get('results') if session.get('results') else results
-   
+
    return render_template('search.html', search_form=search_form, open_file_form=open_file_form, results=results, headers=headers)
+
+
+
+@app.route('/details')
+def details():
+   print(session.get('details'))
+   
+   # print(details)
+   return render_template('details.html',details=session['details'])
+
 
 
    # elif perma_results != []:

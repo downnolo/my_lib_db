@@ -11,6 +11,7 @@
         <a href="/">Home</a>
         <a href="/input">Inserts</a>
         <a href="/search">Search</a>
+        <a href="/details">Details</a>
     </div>
     <div class="main_box">
     <form action="" method="post" novalidate>
@@ -113,11 +114,15 @@
                 
             {% for story in results[1:] %}
             <tr>
-                {% for entry in story %}
+                {% for entry in story[:7] %}
                 <td>{{entry}}</td>
-                {% endfor %}    
+                {% endfor %}
             <td>
-                <form action="{{ url_for('search') }}" method="post">
+                <!-- <a href="details.html" target="_blank">Details on Klick</a> -->
+                <a href="{{ url_for('details', details=details)}}"  target="_blank">Mehr erfahren</a>
+            </td>    
+            <td>
+                <form action="{{ url_for('search')}}" method="post">
                     {{ open_file_form.csrf_token() }}
                     <input type="hidden" name="part" value="{{ story['part'] }}">
                     {{ open_file_form.submit_open() }}
