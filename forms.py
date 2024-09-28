@@ -75,3 +75,7 @@ class StorySearch(FlaskForm):
 class OpenFileForm(FlaskForm):
     part = HiddenField()
     submit_open = SubmitField('Datei öffnen')
+    print('########################')
+    print(submit_open)
+    print(part)
+    print('########################')

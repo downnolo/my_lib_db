@@ -109,41 +109,37 @@
         <table>
                 {% for h in headers %}
                 <th>{{h}}</th>
-                {% endfor %} 
-
-                
-            {% for story in results[1:] %}
+                {% endfor %}       
+            {% for entry in results %}
             <tr>
-                {% for entry in story[:7] %}
-                <td>{{entry}}</td>
-                {% endfor %}
-            <td>
-                <!-- <a href="details.html" target="_blank">Details on Klick</a> -->
-                <a href="{{ url_for('details', details=details)}}"  target="_blank">Mehr erfahren</a>
-            </td>    
-            <td>
-                <form action="{{ url_for('search')}}" method="post">
-                    {{ open_file_form.csrf_token() }}
-                    <input type="hidden" name="part" value="{{ story['part'] }}">
-                    {{ open_file_form.submit_open() }}
-                </form>
-            </td>
+                <td>{{ entry['main_id'] }}</td>
+                <td>{{ entry['title'] }}</td> 
+                <td>{{ entry['author'] }}</td> 
+                <td>{{ entry['words'] }}</td> 
+                <td>{{ entry['status'] }}</td> 
+                <td>{{ entry['serial'] }}</td> 
+                <td>{{ entry['part'] }}</td>
+                <td>
+                <a href="{{ url_for('details', entry_id=entry['main_id']) }}" target="_blank">Mehr erfahren</a>
+                </td>
+                <td>
+                    <form action="{{ url_for('search') }}" method="post">
+                        {{ open_file_form.csrf_token }}
+                        <input type="hidden" name="part" value="{{ entry['part'] }}">
+                        <input type="submit" value="Datei öffnen">
+                    </form>
+                    <!-- <form action="{{ url_for('search') }}" method="post">
+                        {{ open_file_form.csrf_token }}
+                        {{ open_file_form.hidden_tag() }} 
+                        {{ open_file_form.part(value=entry['part']) }} 
+                        {{ open_file_form.submit_open }} 
+                    </form> -->
+                    
+                </td>
             </tr>
+
             {% endfor %}
         </table>
-        <!-- {% for result in results %}
-        <div>
-            {% for x in result %}
-            <p>{{x}}</p>
-            {% endfor %}
-            {{ result['title'] }} - {{ result['part'] }}
-            <form action="{{ url_for('search') }}" method="post">
-                {{ open_file_form.csrf_token() }}
-                <input type="hidden" name="part" value="{{ result['part'] }}">
-                {{ open_file_form.submit_open() }}
-            </form>
-        </div>
-        {% endfor %} -->
     </div>
     
     

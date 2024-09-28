@@ -1,10 +1,19 @@
-<html></html>
-    <head>
-        <h1>HELLO</h1>
-    </head>
+<!DOCTYPE html>
+<link rel="stylesheet" href="{{ url_for('static', filename='details_theme.css') }}">
+<html>
     <body>
-        {% for entry in details %}
-        <td>{{entry}}</td>
-        {% endfor %}
+        <a href="/">Zurück zur Hauptseite</a>
+        <table>
+            <tr>
+                <td>{{ entry['summary'] }}</td>
+                <td>{{ entry['characters'] }}</td> 
+                <td>{{ entry['relationships'] }}</td>
+                <td>{{ entry['genres'] }}</td>
+                <td>{{ entry['tags'] }}</td> 
+                <td>{{ entry['serial'] }}</td> 
+                <td>{{ entry['part'] }}</td>
+            </tr>
+    </table>
     </body>
 </html>
+

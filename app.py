@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 from forms import StoryInput, StorySearch, OpenFileForm
 from query import create_query
 import os
+from flask import flash
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'any secret string'
@@ -82,51 +83,72 @@ def search():
    search_form = StorySearch()
    open_file_form = OpenFileForm()
    results = []
+   session['results'] = []
    headers = ['main_id', 'title', 'author', 'words', 'status', 'summary', 'characters', 'relationships', 'genres', 'tags', 'serial', 'part']
    headers = headers[:5] + headers[-2:]
-   details = headers[5:10]
+   header_details = headers[5:10]
    if request.method == 'POST':
       if search_form.submit_search.data and search_form.is_submitted():
          query = create_query(search_form)
-         conn = db_conn()
-         dict_cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+         conn2 = db_conn()
+         dict_cur = conn2.cursor(cursor_factory=psycopg2.extras.DictCursor)
          dict_cur.execute(query)
-         conn.commit()
-         results = dict_cur.fetchall()
-         session['results'] = results
-         for r in results:
-            print(r)
-            session['details'] = r
+         db_results = dict_cur.fetchall()
+         for r in db_results:
+            entry = {
+               'main_id': r[0],
+               'title': r[1],
+               'author': r[2],
+               'words': r[3],
+               'status': r[4],
+               'summary': r[5],
+               'characters': r[6],
+               'relationships': r[7],
+               'genres': r[7],
+               'tags': r[9],
+               'serial': r[10],
+               'part': r[11]
+            }
 
-      elif open_file_form.submit_open.data and open_file_form.validate_on_submit():
+            session['results'].append(entry)
+         
+         results = session.get('results') if session.get('results') else results
+
+      # elif open_file_form.submit_open.data:
+      #    print('open_file_form.submit_open.data')
+      # #    print(f"submit_open: {open_file_form.submit_open.data}")
+      # # #    flash(f"part: {open_file_form.part.data}")
+
+      # elif open_file_form.validate_on_submit():
+      #    print('open_file_form.validate_on_submit()') 
+         
+      elif open_file_form.submit_open and open_file_form.validate_on_submit():
+         print('ta')
          base_path = "C:\\Users\\Yvonne\\Desktop"
-         part = open_file_form.part.data
+         part = open_file_form.data.get('part')
          full_path = os.path.join(base_path, f"{part}")
+         print(full_path)
          try:
                os.startfile(full_path)
                print(f'Datei erfolgreich geöffnet: {full_path}')
          except Exception as e:
-               print(f'Fehler beim Öffnen der Datei: {str(e)}')
-
-   #print(session)
-
-   results = session.get('results') if session.get('results') else results
+               print(f'Fehler beim Öffnen der Datei: {str(e)}') 
+      #print('open_file_form.part:' + str(open_file_form.part))
 
    return render_template('search.html', search_form=search_form, open_file_form=open_file_form, results=results, headers=headers)
 
 
 
-@app.route('/details')
-def details():
-   print(session.get('details'))
-   
-   # print(details)
-   return render_template('details.html',details=session['details'])
+@app.route('/details/<int:entry_id>')
+def details(entry_id):
+   results = []
+   entries = session.get('results') if session.get('results') else results
+   entry = next((item for item in entries if item['main_id'] == entry_id), None)
+   if entry:
+        return render_template('details.html', entry=entry) 
+   else:
+      return "-nichts gefunden 404"
+#return render_template('details.html',details=session['results'])
 
-
-
-   # elif perma_results != []:
-   #    print(f'perma_results{perma_results}')
-   #    return render_template('search.html', search_form=search_form, open_file_form=open_file_form, results=perma_results, headers=headers)
 
 

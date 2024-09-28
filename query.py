@@ -54,5 +54,4 @@ def create_query(form):
     q = q.replace(' and', '', 1)
     query = f'{base} {q}'
 
-    print(query)
     return query
