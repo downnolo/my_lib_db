@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="{{ url_for('static', filename='edit_theme.css') }}">
+<html>
+    <head>
+        <title>Edit Entry</title>
+    </head>
+    <body>
+        <div class="wrapper">
+        <div class="header">
+        <p>Edit Entry</p>
+        </div>
+        <div class="main_box">
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <p>{{ form.main_id.label }} {{ form.main_id(readonly=True) }}</p>
+            <p>
+                {{ form.title.label }}
+                {{ form.title(size=50, value=entry.title) }}
+            </p>
+            <p>
+                {{ form.author.label }}
+                {{ form.author(size=50, value=entry.author) }}
+            </p>
+            <p>
+                {{ form.words.label }}
+                {{ form.words(size=50, value=entry.words) }}
+            </p>
+            <p>
+                {{ form.summary.label }}
+                {{ form.summary(size=50, value=entry.summary) }}
+            </p>
+            <p>{{ form.submit() }}</p>
+        </div>
+        <div class="character_box">
+            <p>
+                {{ entry.characters }}
+            </p>
+            <p>
+                {{ form.chars_add(multiple=True, size=10) }} <!-- Mehrfachauswahl erlaubt -->
+                {{ form.chars_del(multiple=True, size=10) }} <!-- Mehrfachauswahl erlaubt -->
+            </p>
+        </div>
+            <div class="relation_box">
+            <p>
+                {{ form.rels_add(multiple=True, size=10) }} <!-- Mehrfachauswahl erlaubt -->
+                {{ form.rels_del(multiple=True, size=10) }} <!-- Mehrfachauswahl erlaubt -->
+            </p>
+            </div>
+            <div class="genre_box">
+            <p>
+                {{ form.genres_add(multiple=True, size=10) }} <!-- Mehrfachauswahl erlaubt -->
+                {{ form.genres_del(multiple=True, size=10) }} <!-- Mehrfachauswahl erlaubt -->
+            </p>
+            </div>
+            <div class="tag_box">
+            <p>
+                {{ form.tags_add(multiple=True, size=10) }} <!-- Mehrfachauswahl erlaubt -->
+                {{ form.tags_del(multiple=True, size=10) }} <!-- Mehrfachauswahl erlaubt -->
+            </p>
+            </div>
+        </form>
+        </div>
+    </body>
+</html>

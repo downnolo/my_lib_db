@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="{{ url_for('static', filename='search_theme.css') }}">
+<html>
+    <head>
+        <title>Search by ID</title>
+    </head>
+    <body>
+        <h1>Search Entry</h1>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <p>
+            {{ form.main_id.label }}
+            {{ form.main_id(size=20) }}<br>
+            </p>
+            {{ form.submit() }}
+        </form>
+    </body>
+</html>

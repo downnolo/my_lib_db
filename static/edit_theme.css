@@ -1,0 +1,80 @@
+.wrapper{
+    display: grid;
+    height : 900px;
+    font-family:Arial, Helvetica, sans-serif;
+    grid-template-rows: 5% 30% 55%;
+    grid-template-columns: 25% 25% 25% 25%;
+    background-color:black;
+    column-gap: 10px;
+    row-gap: 10px;
+  }
+
+  .header {
+    background-color: rosybrown;
+    grid-column-start: 1;
+    grid-column-end:  5;
+    grid-row-start: 1;
+    grid-row-end: 2;
+  }
+
+  input[type=text] {
+    background-color: #a96f6f;
+    color: white;
+  }
+
+  select  {
+    background-color: #a96f6f;
+    color: black;
+  }
+
+  textarea {
+    background-color: #a96f6f;
+  }
+
+  .main_box {
+    background-color: rosybrown;
+    grid-column-start: 1;
+    grid-column-end:  5;
+    grid-row-start: 2;
+    grid-row-end: 3;
+  }
+
+  .character_box {
+    background-color: rosybrown;
+    grid-column-start: 1;
+    grid-column-end:  2;
+    grid-row-start:  3;
+    grid-row-end: 4;
+  }
+
+
+  .relation_box {
+    background-color: rosybrown;
+    grid-column-start: 2;
+    grid-column-end:  3;
+    grid-row-start:  3;
+    grid-row-end: 4;
+  }
+
+  .genre_box {
+    background-color: rosybrown;
+    grid-column-start: 3;
+    grid-column-end:  4;
+    grid-row-start: 3;
+    grid-row-end: 4;
+  }
+
+
+  .tag_box {
+    background-color: rosybrown;
+    grid-column-start: 4;
+    grid-column-end:  5;
+    grid-row-start: 3;
+    grid-row-end: 4;
+  }
+
+
+input[type=button], input[type=submit], input[type=reset] {
+  background-color: #5f4449;
+  border: none;
+}

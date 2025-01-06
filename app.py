@@ -1,7 +1,7 @@
 import psycopg2
 import psycopg2.extras
 from flask import Flask, render_template, request, redirect, url_for, session
-from forms import StoryInput, StorySearch, OpenFileForm
+from forms import StoryInput, StorySearch, OpenFileForm, UpdateSearch, UpdateSearchDD, EditForm
 from query import create_query
 import os
 from flask import flash
@@ -25,6 +25,21 @@ def clean_up_select_field(data):
    data.discard('Default') 
 
    return list(data)
+
+
+def update_entry(plus, minus, base):
+   new_entry = []
+
+   if not base:
+      new_entry = new_entry + plus
+   else:
+      new_entry = base + plus
+
+   new_entry = [e for e in new_entry if e not in minus]
+   
+   return list(set(new_entry))
+
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -148,7 +163,89 @@ def details(entry_id):
         return render_template('details.html', entry=entry) 
    else:
       return "-nichts gefunden 404"
-#return render_template('details.html',details=session['results'])
 
+
+def get_entry_by_id(main_id):
+   query = f'''SELECT * from story where main_id = '{main_id}' '''
+   conn3 = db_conn()
+   dict_cur = conn3.cursor(cursor_factory=psycopg2.extras.DictCursor)
+   dict_cur.execute(query)
+   results = dict_cur.fetchone()   
+   return results
+
+@app.route('/search3', methods=['GET', 'POST'])
+def search3():
+    form = EditForm()
+    if request.method == 'POST':
+        main_id = form.main_id.data
+        entry = get_entry_by_id(main_id)
+        if entry:
+            return redirect(url_for('edit_entry', main_id=main_id, entry=entry))
+        else:
+            flash('No entry found with the given Main ID.')
+    return render_template('search3.html', form=form)
+
+
+@app.route('/edit/<main_id>', methods=['GET', 'POST'])
+def edit_entry(main_id):
+    form = EditForm()
+    entry = get_entry_by_id(main_id)
+    
+    if not entry:
+        flash('Entry not found.')
+        return redirect(url_for('search'))
+
+    if request.method == 'POST':
+      # Aktualisieren Sie den Eintrag in der Datenbank
+      updated_entry = {
+         'main_id': main_id,
+         'title': form.title.data,
+         'author': form.author.data,
+         'words': form.words.data,
+         'summary': form.summary.data,
+         'characters' : update_entry(form.chars_add.data, form.chars_del.data, entry['characters']),
+         'relationships' : update_entry(form.rels_add.data, form.rels_del.data, entry['relationships']),
+         'genres' : update_entry(form.genres_add.data, form.genres_del.data, entry['genres']),
+         'tags' : update_entry(form.tags_add.data, form.tags_del.data, entry['tags'])
+        }
+      print(entry)
+      print(updated_entry)
+
+      columns = ', '.join(list(updated_entry.keys()))
+      values = ', '.join(['%({})s'.format(v) for v in list(updated_entry.keys())])
+
+
+
+      #update_entry_in_database(updated_entry)  # Implementieren Sie diese Funktion
+      flash('Entry updated successfully!')
+
+
+    return render_template('edit.html', form=form, entry=entry)
+
+
+
+# @app.route('/updates', methods=['GET', 'POST'])
+# def get_title():
+#    results = []
+#    update_form = UpdateSearch()
+#    # updated_dd = UpdateSearchDD()
+#    if request.method == 'POST':
+#       main_id = update_form.main_id.data
+#       query = f'''SELECT * from story where main_id = '{main_id}' '''
+#       conn3 = db_conn()
+#       dict_cur = conn3.cursor(cursor_factory=psycopg2.extras.DictCursor)
+#       dict_cur.execute(query)
+#       results = dict_cur.fetchone()
+#       x = change_dd(results['characters'])
+      
+#    # if request.method == 'GET':
+#    #    print('yes')
+#    #    if results:
+#    #       print('r')
+#    #       x = change_dd(results['characters'])
+#    #       print(x)
+#    #       print(updated_dd.characters.data)
+
+#    return render_template('updates.html', update_form=update_form, results=results)
 
 

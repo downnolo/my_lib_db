@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="{{ url_for('static', filename='details_theme.css') }}">
+<html>
+    <body>
+        <a href="/">Zurück zur Hauptseite</a>
+        <form action="" method="post" novalidate>
+            {{ update_form.hidden_tag() }}
+            <p>
+                {{ update_form.main_id.label }}
+                {{ update_form.main_id(size=10) }}
+            </p>
+            <p>{{ update_form.submit_update_search() }}</p>
+        </form>
+        <p>{{results}}</p>
+        <p>
+            {{ update_form.title.label }}
+            {{ update_form.title(size=50, value=results['title']) }}
+        </p>
+        <p>
+            {{ update_form.author.label }}
+            {{ update_form.author(size=50, value=results['author']) }}
+        </p>
+        <p>
+            {{ update_form.words.label }}
+            {{ update_form.words(size=10, value=results['words']) }}
+        </p>
+        <p>
+            {{ update_form.status.label }}
+            {{ update_form.status(size=50, value=results['status']) }}
+            {{results['status']}}
+        </p>
+        <p>
+            {{ update_form.summary.label }}
+            {{ update_form.summary(size=150, value=results['summary']) }}
+        </p>
+        <p>
+            {{ update_form.serial.label }}
+            {{ update_form.serial(size=50, value=results['serial']) }}
+        </p>
+        <p>
+            {{ update_form.part.label }}
+            {{ update_form.part(size=50, value=results['part']) }}
+        </p>
+        <!-- <form action="" method="get" novalidate>
+        <p>Characters</p>
+        <p>{{results['characters']}}</p>
+        <p> 
+            {{ updated_dd.add_characters.label }}
+            {{ updated_dd.add_characters }}
+            {{ updated_dd.del_characters.label }}
+            {{ updated_dd.del_characters }}
+            {{ updated_dd.submit_change_char() }}
+
+        </p>
+        </form>
+        <p>Tags</p>
+        <p>{{results['tags']}}</p>
+        <p>
+            {{ updated_dd.add_tags.label }}
+            {{ updated_dd.add_tags }} 
+            {{ updated_dd.del_tags.label }}
+            {{ updated_dd.del_tags }} 
+            {{ updated_dd.submit_change_tag() }}
+        </p> -->
+    </body>
+</html>
+
